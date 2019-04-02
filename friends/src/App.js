@@ -42,6 +42,16 @@ class App extends Component {
       .put(`http://localhost:5000/friends/${id}`, friend)
       .then(res => this.setState({ friends: res.data }))
       .catch(err => console.log(err));
+    this.props.history.push("/");
+  };
+
+  deleteFriend = (e, id) => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:5000/friends/${id}`)
+      .then(res => this.setState({ friends: res.data }))
+      .catch(err => console.log(err));
+    this.props.history.push("/");
   };
 
   render() {
@@ -58,7 +68,11 @@ class App extends Component {
           exact
           path="/"
           render={props => (
-            <FriendsList {...props} friends={this.state.friends} />
+            <FriendsList
+              {...props}
+              deleteFriend={this.deleteFriend}
+              friends={this.state.friends}
+            />
           )}
         />
         <Route

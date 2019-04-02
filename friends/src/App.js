@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Route } from "react-router-dom";
+import axios from "axios";
 
 //components
 import FriendsList from "./components/FriendsList";
@@ -14,10 +15,22 @@ class App extends Component {
       friends: []
     };
   }
+  componentDidMount() {
+    axios
+      .get("http://localhost:5000/friends")
+      .then(res => this.setState({ friends: res.data }))
+      .catch(err => {});
+  }
   render() {
     return (
       <div>
-        <Route exact path="/" component={FriendsList} />
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <FriendsList {...props} friends={this.state.friends} />
+          )}
+        />
         <Route path="/form" component={FriendForm} />
       </div>
     );

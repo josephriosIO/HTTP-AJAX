@@ -6,6 +6,7 @@ import axios from "axios";
 //components
 import FriendsList from "./components/FriendsList";
 import FriendForm from "./components/FriendForm";
+import UpdateFriendForm from "./components/UpdateFriendForm";
 
 class App extends Component {
   constructor() {
@@ -35,6 +36,13 @@ class App extends Component {
       });
   };
 
+  putFriend = (id, friend) => {
+    axios
+      .put(`http://localhost:5000/friends/${id}`, friend)
+      .then(res => this.setState({ friends: res.data }))
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <div>
@@ -43,6 +51,7 @@ class App extends Component {
             Home
           </NavLink>
           <NavLink to="/form">Form</NavLink>
+          <NavLink to="/form/update">Update Friend</NavLink>
         </div>
         <Route
           exact
@@ -52,8 +61,15 @@ class App extends Component {
           )}
         />
         <Route
+          exact
           path="/form"
           render={props => <FriendForm {...props} addFriend={this.addFriend} />}
+        />
+        <Route
+          path="/form/update"
+          render={props => (
+            <UpdateFriendForm {...props} putFriend={this.putFriend} />
+          )}
         />
       </div>
     );

@@ -1,6 +1,9 @@
 import React from "react";
 
 const FriendsList = props => {
+  if (props.friends.length === 0) {
+    return <h3>Waiting on friends to come...</h3>;
+  }
   return (
     <div>
       {props.friends.map(friend => (

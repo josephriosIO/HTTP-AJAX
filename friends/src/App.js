@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 //components
@@ -12,18 +12,28 @@ class App extends Component {
     super();
 
     this.state = {
-      friends: []
+      friends: [],
+      error: ""
     };
   }
   componentDidMount() {
     axios
       .get("http://localhost:5000/friends")
       .then(res => this.setState({ friends: res.data }))
-      .catch(err => {});
+      .catch(err => {
+        console.log(err);
+        this.setState({ error: err });
+      });
   }
   render() {
     return (
       <div>
+        <div className="nav-links">
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+          <NavLink to="/form">Form</NavLink>
+        </div>
         <Route
           exact
           path="/"

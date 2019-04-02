@@ -15,6 +15,9 @@ const FriendsList = props => {
           <button onClick={e => props.deleteFriend(e, friend.id)}>
             delete friend
           </button>
+          <button onClick={e => props.putFriend(friend.id, friend)}>
+            update friend
+          </button>
         </div>
       ))}
     </div>

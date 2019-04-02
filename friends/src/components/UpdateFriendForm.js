@@ -26,10 +26,10 @@ class UpdateFriendForm extends Component {
       }
     }));
   };
-  changeFriend = e => {
+  changeFriend = (e, id) => {
     e.preventDefault();
 
-    this.props.putFriend("5", this.state.friend);
+    this.props.putFriend(id, this.state.friend);
     this.setState({
       friend: {
         name: "",

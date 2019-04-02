@@ -14,7 +14,8 @@ class App extends Component {
 
     this.state = {
       friends: [],
-      error: ""
+      error: "",
+      activeFriend: null
     };
   }
   componentDidMount() {
@@ -34,6 +35,14 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
+    this.props.history.push("/");
+  };
+
+  setUpdateFriend = (e, friend) => {
+    e.preventDefault();
+    this.setState({
+      activeFriend: friend
+    });
     this.props.history.push("/");
   };
 
@@ -70,6 +79,7 @@ class App extends Component {
           render={props => (
             <FriendsList
               {...props}
+              putFriend={this.putFriend}
               deleteFriend={this.deleteFriend}
               friends={this.state.friends}
             />
@@ -83,7 +93,11 @@ class App extends Component {
         <Route
           path="/form/update"
           render={props => (
-            <UpdateFriendForm {...props} putFriend={this.putFriend} />
+            <UpdateFriendForm
+              {...props}
+              activeFriend={this.state.activeFriend}
+              putFriend={this.putFriend}
+            />
           )}
         />
       </div>

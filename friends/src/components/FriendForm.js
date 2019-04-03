@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 
 class FriendForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      friend: {
-        name: "",
-        email: "",
-        age: ""
-      }
+      friend: this.props.friend
     };
   }
 
@@ -30,7 +26,11 @@ class FriendForm extends Component {
   addFriend = e => {
     e.preventDefault();
 
-    this.props.addFriend(this.state.friend);
+    if (this.props.activeFriend) {
+      this.props.updateFriendForm(this.state.friend);
+    } else {
+      this.props.addFriend(this.state.friend);
+    }
     this.setState({
       friend: {
         name: "",
@@ -43,7 +43,7 @@ class FriendForm extends Component {
   render() {
     return (
       <div>
-        <h1>enter new friend</h1>
+        <h1>{this.props.activeFriend ? "update friend" : "add new friend"}</h1>
         <form onSubmit={this.addFriend}>
           <input
             onChange={this.handleChanges}
@@ -66,7 +66,9 @@ class FriendForm extends Component {
             placeholder="enter email..."
             type="email"
           />
-          <button type="submit">submit</button>
+          <button type="submit">
+            {this.props.activeFriend ? "Update friend" : "add friend"}
+          </button>
         </form>
       </div>
     );
